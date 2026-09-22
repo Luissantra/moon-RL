@@ -1,0 +1,31 @@
+{
+  "method": "Sensor-based demonstration warm start followed by Double DQN replay updates; selected by validation success.",
+  "selectedPhase": "DQN cycle 1",
+  "episodes": 192,
+  "updates": 180,
+  "samples": 32633,
+  "validationSeeds": "9000–9007 (model selection)",
+  "results": {
+    "contact": {
+      "successes": 8,
+      "episodes": 8,
+      "collisions": 0,
+      "reward": 50.536993982032016,
+      "original": "success"
+    },
+    "rocks": {
+      "successes": 6,
+      "episodes": 8,
+      "collisions": 2,
+      "reward": 37.73453694227299,
+      "original": "success"
+    },
+    "base": {
+      "successes": 8,
+      "episodes": 8,
+      "collisions": 0,
+      "reward": 49.54135873443044,
+      "original": "success"
+    }
+  }
+}
