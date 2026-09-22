@@ -217,8 +217,8 @@ input[type=range] { accent-color: #87a86a; height: 3px; width: 100%; cursor: poi
 .guide-footnote { font-size: 8px; line-height: 1.8; color: #a1ac96; border-top: 1px solid var(--line); margin: 20px 0 0; padding-top: 13px; }
 .toast { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #354732; border: 1px solid #6e825e; color: #eef6e5; font-size: 12px; padding: 13px 17px; border-radius: 8px; box-shadow: 0 8px 30px #25312026; z-index: 50; display: flex; gap: 10px; align-items: center; max-width: calc(100vw - 30px); }
 .toast button { color: #b8cba7; padding: 0 0 0 12px; }
-.error-banner { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-radius: 7px; background: #f6eadb; border: 1px solid #e7d0b5; color: #9c7247; font-size: 12px; margin-bottom: 20px; gap: 15px; }
-.error-banner button { color: #a9845b; padding: 0; }
+.toast.error-toast { background: #f6eadb; border-color: #e7d0b5; color: #795231; z-index: 110; overflow-wrap: anywhere; }
+.error-toast button { color: inherit; }
 .modal-backdrop { position: fixed; inset: 0; background: #17231cd1; backdrop-filter: blur(6px); z-index: 100; display: grid; place-items: center; padding: 20px; }
 .modal { position: relative; background: #fbfcf7; border: 1px solid #ced9c3; border-radius: 15px; padding: 36px; width: min(560px, 100%); max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 100px #111e1840; }
 .modal-close { position: absolute; right: 16px; top: 16px; padding: 4px; color: #88967e; }

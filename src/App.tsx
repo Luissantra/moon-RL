@@ -205,6 +205,7 @@ export default function App() {
   }
   function loadAgent(agent: SavedAgent, label: string) {
     agentSelected.current = true
+    setError('')
     run(false)
     send({ type: 'load', agent })
     setAgentLabel(label)
@@ -220,6 +221,7 @@ export default function App() {
   }
   async function importAgent(file?: File) {
     if (!file) return
+    setError('')
     try {
       if (file.size > 2_000_000) throw new Error('El archivo es demasiado grande (máximo 2 MB).')
       const value: unknown = JSON.parse(await file.text())
@@ -269,8 +271,6 @@ export default function App() {
           <button className="text-link" onClick={() => setTab(tab === 'guide' ? 'missions' : 'guide')}>{tab === 'guide' ? 'Volver a las misiones' : '¿Primera vez? Empieza por la guía'} <ArrowUpRight size={17} /></button>
         </div>
       </section>
-
-      {error && <div className="error-banner" role="alert"><span>{error}</span><button aria-label="Cerrar aviso" onClick={() => setError('')}><X size={17} /></button></div>}
 
       <div className="workspace">
         <div className="main-column">
@@ -348,7 +348,7 @@ export default function App() {
       </div>
       <footer className="site-footer"><span><Orbit size={15} /> RUMBO LUNAR <i /> Aprender también es explorar.</span><button onClick={() => setShowAbout(true)}>Sobre este experimento <ArrowUpRight size={13} /></button><span>REACT · RAPIER · TENSORFLOW.JS</span></footer>
     </main>
-    {notice && <div className="toast" role="status"><Check size={16} /> {notice}<button aria-label="Cerrar notificación" onClick={() => setNotice('')}><X size={14} /></button></div>}
+    {error ? <div className="toast error-toast" role="alert"><span>{error}</span><button aria-label="Cerrar aviso" onClick={() => setError('')}><X size={17} /></button></div> : notice && <div className="toast" role="status"><Check size={16} /> {notice}<button aria-label="Cerrar notificación" onClick={() => setNotice('')}><X size={14} /></button></div>}
     {showCompare && <div className="modal-backdrop" onClick={event => { if (event.target === event.currentTarget) closeCompare() }}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="compare-title"><button className="modal-close" aria-label="Cerrar comparación" onClick={closeCompare}><X size={19} /></button><div className="eyebrow"><GitCompareArrows size={16} /> EVALUACIÓN SIN EXPLORACIÓN</div><h2 id="compare-title">Aprender. Y comprobarlo.</h2><p>Compara la red actual con su referencia al cargarla o crearla. Cada agente realiza seis intentos en las mismas variaciones nuevas de esta misión, sin modificar sus pesos.</p>
       {evaluation ? <table className="evaluation-table"><thead><tr><th>Resultado</th><th>Referencia</th><th>Actual</th></tr></thead><tbody><tr><td>Éxitos</td><td>{evaluation.baseline.successes} / 6</td><td>{evaluation.current.successes} / 6</td></tr><tr><td>Accidentes</td><td>{evaluation.baseline.collisions}</td><td>{evaluation.current.collisions}</td></tr><tr><td>Recorrido medio</td><td>{evaluation.baseline.meanPath.toFixed(1)} m</td><td>{evaluation.current.meanPath.toFixed(1)} m</td></tr><tr><td>Recompensa media</td><td>{evaluation.baseline.meanReward.toFixed(1)}</td><td>{evaluation.current.meanReward.toFixed(1)}</td></tr></tbody></table> : <div className="evaluation-placeholder"><GitCompareArrows size={30} /><p>{evalProgress === null ? 'La evaluación usa terrenos distintos al entrenamiento.' : `Evaluando ambos agentes… ${Math.round(evalProgress * 100)}%`}</p>{evalProgress !== null && <progress value={evalProgress} max={1} />}</div>}
       <div className="modal-actions"><button className="button secondary" onClick={closeCompare}>{evalProgress === null ? 'Cerrar' : 'Cancelar'}</button><button className="button dark" disabled={evalProgress !== null} onClick={evaluate}><Play size={15} /> {evaluation ? 'Repetir evaluación' : 'Evaluar 12 recorridos'}</button></div><p className="small-note">Una muestra pequeña orienta, pero no demuestra una mejora general. Un recorrido corto puede significar una colisión temprana.</p>
